@@ -6,7 +6,7 @@ services:
       context: .
       target: build
     volumes:
-      - ./:/go/app
+      - ./:/go/src/github.com/app
     command: realize start --run --no-config
     ports:
       - 8080:8080

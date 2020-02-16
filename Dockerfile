@@ -1,13 +1,21 @@
 FROM golang:1.13.0-alpine3.10 as build
 
-WORKDIR /go/app
+ENV GOPATH /go
 
-COPY . .
+WORKDIR $GOPATH
 
 RUN set -ex && \
     apk update && \
     apk add --no-cache git && \
-    go build -o portfolio-backend && \
+    go get -u github.com/golang/dep/cmd/dep
+
+RUN mkdir $GOPATH/src/github.com/app
+
+WORKDIR $GOPATH/src/github.com/app
+
+COPY . .
+
+RUN go build -o portfolio-backend && \
     go get gopkg.in/urfave/cli.v2@master && \
     go get github.com/oxequa/realize && \
     go get -u github.com/go-delve/delve/cmd/dlv && \
@@ -15,9 +23,7 @@ RUN set -ex && \
 
 FROM alpine:3.10
 
-WORKDIR /app
-
-COPY --from=build /go/app/app .
+COPY --from=build $GOPATH/src/github.com/app .
 
 RUN set -x \
     && addgroup go \
