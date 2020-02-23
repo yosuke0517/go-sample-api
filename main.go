@@ -1,28 +1,35 @@
-    package main
+package main
 
-    import (
-        "net/http"
-        "app/routes"
-        "github.com/labstack/echo"
-        "github.com/labstack/echo/middleware"
-        "github.com/sirupsen/logrus"
-    )
+import (
+	"app/routes"
+	"net/http"
 
-    func init() {
-         logrus.SetLevel(logrus.DebugLevel)
-         logrus.SetFormatter(&logrus.JSONFormatter{})
-    }
+	"github.com/joho/godotenv"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+	"github.com/sirupsen/logrus"
+)
 
-    func main() {
-        e := echo.New()
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		logrus.Fatal("Error loading .env")
+	}
+	logrus.SetLevel(logrus.DebugLevel)
+	logrus.SetFormatter(&logrus.JSONFormatter{})
+}
 
-        //Middlewares
-        e.Use(middleware.Logger())
+func main() {
+	e := echo.New()
 
-        // Routes
-        routes.Init(e)
-        e.GET("/", func(c echo.Context) error {
-            return c.String(http.StatusOK, "Hello, World!")
-        })
-        e.Logger.Fatal(e.Start(":8080"))
-    }
+	//Middlewares
+	e.Use(middleware.Logger())
+	e.Use(middleware.CORS())
+
+	// Routes
+	routes.Init(e)
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Hello, World!")
+	})
+	e.Logger.Fatal(e.Start(":8080"))
+}
