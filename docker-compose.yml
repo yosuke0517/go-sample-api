@@ -10,3 +10,8 @@ services:
     command: realize start --run --no-config
     ports:
       - 8080:8080
+      - 8000:8000
+    security_opt:
+      - apparmor:unconfined
+    cap_add:
+      - SYS_PTRACE
