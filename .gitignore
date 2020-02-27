@@ -4,3 +4,6 @@
 .env
 
 /.vscode
+
+# go build output
+video-manager-go
