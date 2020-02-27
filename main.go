@@ -1,6 +1,7 @@
 package main
 
 import (
+	"app/middlewares"
 	"app/routes"
 	"net/http"
 
@@ -25,6 +26,7 @@ func main() {
 	//Middlewares
 	e.Use(middleware.Logger())
 	e.Use(middleware.CORS())
+	e.Use(middlewares.YouTubeService())
 
 	// Routes
 	routes.Init(e)

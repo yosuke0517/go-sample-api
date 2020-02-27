@@ -3,7 +3,10 @@ module app
 go 1.13
 
 require (
+	firebase.google.com/go v3.12.0+incompatible // indirect
+	github.com/aiiro/youtube-manager-go v0.0.0-20191031055821-f61686c30fc2 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/jinzhu/gorm v1.9.12 // indirect
 	github.com/joho/godotenv v1.3.0
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.0 // indirect
