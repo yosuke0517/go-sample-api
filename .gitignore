@@ -7,3 +7,5 @@
 
 # go build output
 video-manager-go
+
+.idea
